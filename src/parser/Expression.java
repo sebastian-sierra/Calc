@@ -4,6 +4,7 @@ import lexer.*;
 import state.State;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by sebastian on 29/02/16.
@@ -20,13 +21,13 @@ public abstract class Expression extends AST {
             return parseCompositeExpressionTail(nextToken);
         }
         else if (token instanceof lexer.Identifier) {
-            Identifier identifier = (Identifier)token;
+            Identifier identifier = (Identifier) token;
             return new Variable(identifier.getValue());
         }
         else throw new RuntimeException();
     }
 
-    public abstract int eval(State<Integer> state);
+    public abstract int eval(State<Integer> variableState, State<Function> functionState);
 
     public static Expression parseCompositeExpressionTail(Token token) throws IOException, UnexpectedCharacter {
 
@@ -37,10 +38,12 @@ public abstract class Expression extends AST {
 
             if (SLexer.getToken() instanceof RPar) {
                 return new ConditionalExpression(exp1, exp2, exp3);
-            } else throw new RuntimeException();
+            }
+            else throw new RuntimeException();
 
 
-        } else if (token instanceof Op) {
+        }
+        else if (token instanceof Op) {
             Op op = (Op) token;
             if (op.getValue() == VOp.MINUS) {
                 Expression exp1 = Expression.parse(SLexer.getToken());
@@ -48,23 +51,32 @@ public abstract class Expression extends AST {
 
                 if (nextToken instanceof RPar) {
                     return new UnaryMinusExpression(exp1);
-                } else {
+                }
+                else {
                     Expression exp2 = Expression.parse(nextToken);
 
                     if (SLexer.getToken() instanceof RPar) {
                         return new OpExpression(VOp.MINUS, exp1, exp2);
-                    } else throw new RuntimeException();
+                    }
+                    else throw new RuntimeException();
 
                 }
-            } else {
+            }
+            else {
                 Expression exp1 = Expression.parse(SLexer.getToken());
                 Expression exp2 = Expression.parse(SLexer.getToken());
 
                 if (SLexer.getToken() instanceof RPar) {
                     return new OpExpression(op.getValue(), exp1, exp2);
-                } else throw new RuntimeException();
+                }
+                else throw new RuntimeException();
             }
-        } else throw new RuntimeException();
+        }
+        else if (token instanceof Identifier) {
+            Identifier functionIdentifier = (Identifier) token;
+            return FunctionCall.parse(SLexer.getToken(), new LinkedList<>(), functionIdentifier);
+        }
+        else throw new RuntimeException();
 
     }
 
@@ -73,7 +85,7 @@ public abstract class Expression extends AST {
             return new Literal(((lexer.Literal) token).getValue());
         }
         else if (token instanceof lexer.Identifier) {
-            Identifier identifier = (Identifier)token;
+            Identifier identifier = (Identifier) token;
             return new Variable(identifier.getValue());
         }
         else throw new RuntimeException();

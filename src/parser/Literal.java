@@ -19,7 +19,7 @@ public class Literal extends Expression {
     }
 
     @Override
-    public int eval(State<Integer> state) {
+    public int eval(State<Integer> variableState, State<Function> functionState) {
         return value;
     }
 }

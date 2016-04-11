@@ -33,8 +33,8 @@ public class Definition extends AST {
 
     }
 
-    public void eval (State<Integer> state) {
-        state.bind(variable.getValue(), expression.eval(state));
+    public void eval (State<Integer> variableState, State<Function> functionState) {
+        variableState.bind(variable.getValue(), expression.eval(variableState, functionState));
     }
 
     @Override

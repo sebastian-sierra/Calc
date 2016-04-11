@@ -24,7 +24,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public int eval(State<Integer> state) {
-        return state.lookup(this.getValue());
+    public int eval(State<Integer> variableState, State<Function> functionState) {
+        return variableState.lookup(this.getValue());
     }
 }

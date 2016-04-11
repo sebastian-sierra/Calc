@@ -4,10 +4,8 @@ import lexer.SLexer;
 import lexer.Token;
 import lexer.UnexpectedCharacter;
 import parser.Body;
-import parser.Definition;
-import parser.Expression;
+import parser.Program;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -19,8 +17,8 @@ public class Calc {
     public static void main(String[] args) throws IOException, UnexpectedCharacter {
         SLexer.init(args[0]);
         Token t = SLexer.getToken();
-        Body body = Body.parse(t, new LinkedList<>());
+        Program program = Program.parse(t, new LinkedList<>());
         //System.out.println(body);
-        System.out.println(body.eval());
+        System.out.println(program.eval());
     }
 }

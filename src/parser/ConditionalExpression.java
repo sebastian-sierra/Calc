@@ -24,7 +24,7 @@ public class ConditionalExpression extends Expression {
     }
 
     @Override
-    public int eval(State<Integer> state) {
-        return condition.eval(state) != 0 ? whenTrueExpression.eval(state) : whenFalseExpression.eval(state);
+    public int eval(State<Integer> variableState, State<Function> functionState) {
+        return condition.eval(variableState, functionState) != 0 ? whenTrueExpression.eval(variableState, functionState) : whenFalseExpression.eval(variableState, functionState);
     }
 }

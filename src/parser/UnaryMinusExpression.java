@@ -19,7 +19,7 @@ public class UnaryMinusExpression extends Expression {
     }
 
     @Override
-    public int eval(State<Integer> state) {
-        return - expression.eval(state);
+    public int eval(State<Integer> variableState, State<Function> functionState) {
+        return - expression.eval(variableState, functionState);
     }
 }

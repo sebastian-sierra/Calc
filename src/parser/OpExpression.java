@@ -24,14 +24,14 @@ public class OpExpression extends Expression {
     }
 
     @Override
-    public int eval(State<Integer> state) {
+    public int eval(State<Integer> variableState, State<Function> functionState) {
         switch (vOp) {
-            case SUM: return expression1.eval(state) + expression2.eval(state);
-            case MULT: return expression1.eval(state) * expression2.eval(state);
-            case MINUS: return expression1.eval(state) - expression2.eval(state);
-            case DIVISION: return expression1.eval(state) / expression2.eval(state);
-            case COMP: return expression1.eval(state) == expression2.eval(state) ? 1 : 0;
-            case LESS: return expression1.eval(state) < expression2.eval(state) ? 1 : 0;
+            case SUM: return expression1.eval(variableState, functionState) + expression2.eval(variableState, functionState);
+            case MULT: return expression1.eval(variableState, functionState) * expression2.eval(variableState, functionState);
+            case MINUS: return expression1.eval(variableState, functionState) - expression2.eval(variableState, functionState);
+            case DIVISION: return expression1.eval(variableState, functionState) / expression2.eval(variableState,functionState );
+            case COMP: return expression1.eval(variableState, functionState) == expression2.eval(variableState, functionState) ? 1 : 0;
+            case LESS: return expression1.eval(variableState, functionState) < expression2.eval(variableState, functionState) ? 1 : 0;
             default: throw new RuntimeException();
         }
 
