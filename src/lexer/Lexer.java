@@ -107,40 +107,40 @@ public class Lexer {
                     String value = (char)i+"";
                     if (i == 'i') {
                         i = in.read();
-                        value += i;
+                        value += (char)i;
                         if (i == 'f') {
                             i = in.read();
                             if (i == ' ') {
                                 i = in.read();
                                 return new If();
                             } else {
-                                value += i;
+                                value += (char)i;
                             }
                         }
                     }
 
-                    if (i == 'd') {
+                    else if (i == 'd') {
                         i = in.read();
-                        value += i;
+                        value += (char)i;
                         if (i == 'e') {
                             i = in.read();
-                            value += i;
+                            value += (char)i;
                             if (i == 'f') {
                                 i = in.read();
-                                value += i;
+                                value += (char)i;
                                 if (i == 'i') {
                                     i = in.read();
-                                    value += i;
+                                    value += (char)i;
                                     if (i == 'n') {
                                         i = in.read();
-                                        value += i;
+                                        value += (char)i;
                                         if (i == 'e') {
                                             i = in.read();
                                             if (i == ' ') {
                                                 i = in.read();
                                                 return new Define();
                                             } else {
-                                                value += i;
+                                                value += (char)i;
                                             }
                                         }
                                     }
