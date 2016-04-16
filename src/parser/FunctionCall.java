@@ -24,7 +24,8 @@ public class FunctionCall extends Expression {
 
         if (token instanceof RPar) {
             return new FunctionCall(functionIdentifier.getValue(), parameters);
-        } else {
+        }
+        else {
             Expression parameter = Expression.parse(token);
             parameters.add(parameter);
             return parse(SLexer.getToken(), parameters, functionIdentifier);
@@ -34,8 +35,11 @@ public class FunctionCall extends Expression {
     @Override
     public int eval(State<Integer> variableState, State<Function> functionState) {
         Function function = functionState.lookup(identifier);
-        State<Integer> localState = bindArguments(function.getHead().getVariables(), parameters, variableState, functionState);
-        return function.getBody().eval(localState, functionState);
+        if (function != null) {
+            State<Integer> localState = bindArguments(function.getHead().getVariables(), parameters, variableState, functionState);
+            return function.getBody().eval(localState, functionState);
+        }
+        else throw new RuntimeException("Function " + identifier + " not found");
 
     }
 

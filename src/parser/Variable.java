@@ -25,6 +25,14 @@ public class Variable extends Expression {
 
     @Override
     public int eval(State<Integer> variableState, State<Function> functionState) {
-        return variableState.lookup(this.getValue());
+
+        Integer variableValue = variableState.lookup(this.getValue());
+
+        if(variableValue!=null) {
+            return variableValue;
+        } else {
+            throw new RuntimeException("Variable "+this.getValue()+" not found");
+        }
+
     }
 }

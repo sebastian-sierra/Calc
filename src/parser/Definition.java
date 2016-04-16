@@ -33,12 +33,17 @@ public class Definition extends AST {
 
     }
 
-    public void eval (State<Integer> variableState, State<Function> functionState) {
-        variableState.bind(variable.getValue(), expression.eval(variableState, functionState));
+    public void eval(State<Integer> variableState, State<Function> functionState) {
+        if (variableState.lookup(variable.getValue()) == null) {
+            variableState.bind(variable.getValue(), expression.eval(variableState, functionState));
+        }
+        else {
+            throw new RuntimeException("Variable "+variable.getValue()+" is already defined");
+        }
     }
 
     @Override
     public String toString() {
-        return "DEFINITION("+variable+", "+expression+")";
+        return "DEFINITION(" + variable + ", " + expression + ")";
     }
 }

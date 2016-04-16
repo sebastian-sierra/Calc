@@ -40,7 +40,9 @@ public class Function extends AST {
     }
 
     public void eval(State<Function> state) {
-        state.bind(this.head.getFunctionIdentifier(), this);
+        if (state.lookup(head.getFunctionIdentifier()) == null) {
+            state.bind(this.head.getFunctionIdentifier(), this);
+        } else throw new RuntimeException("Function "+head.getFunctionIdentifier()+" is already defined");
     }
 
 }
